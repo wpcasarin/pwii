@@ -1,0 +1,41 @@
+<table
+  xmlns:th="http://www.thymeleaf.org"
+  th:fragment="user_list(users)"
+  class="table"
+>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Doc</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:if="${#lists.isEmpty(users)}">
+      <td colspan="4">No users found.</td>
+    </tr>
+    <tr th:each="user, iter : ${users}">
+      <td th:text="${iter.index + 1}"></td>
+      <td th:text="${user.name}"></td>
+      <td th:text="${user.email}"></td>
+      <td th:text="${user.phone}"></td>
+      <td th:if="${user.cpf} != null" th:text="${user.cpf}"></td>
+      <td th:if="${user.cnpj} != null" th:text="${user.cnpj}"></td>
+      <td class="flex flex-row">
+        <span
+          th:replace="~{/fragments/forms/user_edit_form :: user_edit_form(user=${user})}"
+        ></span>
+        <a
+          th:href="@{/users/delete/{id}(id=${user.id})}"
+          th:onclick="return confirm('Are you sure?')"
+          class="btn btn-link text-error pl-0"
+        >
+          Delete
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

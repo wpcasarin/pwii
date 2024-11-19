@@ -1,0 +1,27 @@
+<!doctype html>
+<html
+  lang="en"
+  data-theme="light"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" th:href="@{/favicon.svg}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <title layout:title-pattern="$CONTENT_TITLE | $LAYOUT_TITLE">BuyMore</title>
+    <script th:src="@{/js/htmx.min.js}"></script>
+    <script defer th:src="@{/js/alpine.min.js}"></script>
+  </head>
+  <body class="flex flex-col min-h-svh">
+    <header th:replace="~{fragments/common/navbar :: navbar}"></header>
+
+    <main
+      layout:fragment="content"
+      class="container mx-auto flex-grow p-6 lg:py-8"
+    ></main>
+
+    <footer th:replace="~{fragments/common/footer :: footer}"></footer>
+  </body>
+</html>

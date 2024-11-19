@@ -1,0 +1,61 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <div th:fragment="product_edit_form(product)">
+    <button
+      class="btn btn-link pl-0"
+      th:onclick="|document.getElementById('product_edit_form' + ${product.id}).showModal();|"
+    >
+      Edit
+    </button>
+    <dialog th:id="${'product_edit_form'+product.id}" class="modal">
+      <div class="modal-box">
+        <form method="dialog">
+          <button
+            class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          >
+            ✕
+          </button>
+        </form>
+        <form
+          th:action="@{/products/edit/{id}(id=${product.id})}"
+          method="post"
+          class="flex flex-col gap-4"
+        >
+          <h1 class="text-xl font-bold">Edit Product</h1>
+          <label class="form-control w-full">
+            <span class="label">
+              <span class="label-text">Description:</span>
+            </span>
+            <input
+              th:value="${product.description}"
+              name="description"
+              type="text"
+              class="input input-bordered w-full"
+              required
+            />
+          </label>
+
+          <label class="form-control w-full">
+            <span class="label">
+              <span class="label-text">Price:</span>
+            </span>
+            <input
+              th:value="${product.price}"
+              name="price"
+              class="input input-bordered w-full"
+              type="number"
+              step="0.01"
+              required
+            />
+          </label>
+          <button
+            th:onclick="|document.getElementById('product_edit_form' + ${product.id}).showModal();|"
+            type="submit"
+            class="btn btn-primary mt-2"
+          >
+            Save Product
+          </button>
+        </form>
+      </div>
+    </dialog>
+  </div>
+</html>

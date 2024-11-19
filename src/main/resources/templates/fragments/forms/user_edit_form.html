@@ -1,0 +1,121 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <div th:fragment="user_edit_form(user)">
+    <button
+      class="btn btn-link pl-0"
+      th:onclick="|document.getElementById('user_edit_form' + ${user.id}).showModal();|"
+    >
+      Edit
+    </button>
+    <dialog th:id="${'user_edit_form'+user.id}" class="modal">
+      <div class="modal-box">
+        <form
+          th:action="@{/users/edit/{id}(id=${user.id})}"
+          method="post"
+          class="flex flex-col"
+        >
+          <h1 class="text-xl font-bold">Edit</h1>
+          <!--          B2B FIELDS-->
+          <div th:if="${user.cnpj != null}">
+            <label class="form-control w-full">
+              <span class="label">
+                <span class="label-text">Business name:</span>
+              </span>
+              <input
+                th:value="${user.businessName}"
+                name="businessName"
+                type="text"
+                class="input input-bordered w-full"
+                required
+              />
+            </label>
+
+            <label class="form-control w-full">
+              <span class="label">
+                <span class="label-text">CNPJ:</span>
+              </span>
+              <input
+                th:value="${user.cnpj}"
+                name="cnpj"
+                type="number"
+                maxlength="14"
+                minlength="14"
+                class="input input-bordered w-full"
+                required
+              />
+            </label>
+          </div>
+
+          <!--          B2C FIELDS-->
+          <div th:if="${user.cpf != null}">
+            <label class="form-control w-full">
+              <span class="label">
+                <span class="label-text">Name:</span>
+              </span>
+              <input
+                th:value="${user.name}"
+                name="name"
+                type="text"
+                class="input input-bordered w-full"
+                required
+              />
+            </label>
+
+            <label class="form-control w-full">
+              <span class="label">
+                <span class="label-text">CPF:</span>
+              </span>
+              <input
+                th:value="${user.cpf}"
+                name="cpf"
+                type="number"
+                maxlength="11"
+                minlength="11"
+                class="input input-bordered w-full"
+                required
+              />
+            </label>
+          </div>
+
+          <!--          EMAIL-->
+          <label class="form-control w-full">
+            <span class="label">
+              <span class="label-text">Email:</span>
+            </span>
+            <input
+              th:value="${user.email}"
+              name="email"
+              type="email"
+              class="input input-bordered w-full"
+              required
+            />
+          </label>
+
+          <label class="form-control w-full">
+            <span class="label">
+              <span class="label-text">Phone:</span>
+            </span>
+            <input
+              th:value="${user.phone}"
+              name="phone"
+              type="number"
+              class="input input-bordered w-full"
+              required
+            />
+          </label>
+
+          <button
+            th:onclick="user_new_form.showModal()"
+            type="submit"
+            class="btn btn-primary mt-6"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+      <!--      CLOSE-->
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+  </div>
+</html>

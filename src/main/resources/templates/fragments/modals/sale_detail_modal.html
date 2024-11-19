@@ -1,0 +1,79 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="sale_detail_modal(sale)">
+  <button
+    class="btn btn-link pl-0"
+    th:onclick="|document.getElementById('sale_view_form' + ${sale.id}).showModal();|"
+  >
+    View
+  </button>
+  <dialog th:id="${'sale_view_form' + sale.id}" class="modal">
+    <div class="modal-box">
+      <h1 class="py-4 text-3xl font-bold">Sale Details</h1>
+      <div th:if="${sale}">
+        <div class="flex flex-row text-lg gap-5 pb-5 text-gray-500">
+          <div>
+            Sale ID:
+            <span
+              th:text="${sale.id}"
+              class="font-bold text-base-content"
+            ></span>
+          </div>
+          <div>
+            Creation date:
+            <span
+              th:text="${#temporals.format(sale.createdAt, 'dd/MM/yyyy HH:mm')}"
+              class="font-bold text-base-content"
+            ></span>
+          </div>
+          <div>
+            Last update:
+            <span
+              th:text="${#temporals.format(sale.updatedAt, 'dd/MM/yyyy HH:mm')}"
+              class="font-bold text-base-content"
+            ></span>
+          </div>
+        </div>
+
+        <div class="flex flex-row justify-between">
+          <div class="flex flex-col">
+            <span class="text-xl font-bold">Total Price:</span>
+            <span
+              th:text="'R$ ' + ${#numbers.formatDecimal(sale.totalPrice,2,2,'COMMA')}"
+              class="text-4xl font-bold text-primary"
+            ></span>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-gray-500 text-lg">Customer:</span>
+            <span th:text="${sale.user.name}" class="text-xl font-bold"></span>
+          </div>
+        </div>
+      </div>
+      <span class="divider"></span>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="item : ${sale.items}">
+            <td th:text="${item.product.description}"></td>
+            <td th:text="${item.amount}"></td>
+            <td
+              th:text="'R$ ' + ${#numbers.formatDecimal(item.product.price,2,2,'COMMA')}"
+            ></td>
+            <td
+              th:text="'R$ ' + ${#numbers.formatDecimal(item.totalPrice(),2,2,'COMMA')}"
+            ></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
+</div>

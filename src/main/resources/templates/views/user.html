@@ -1,0 +1,22 @@
+<!doctype html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <title th:text="${title}"></title>
+  </head>
+  <main layout:fragment="content">
+    <div class="flex flex-row justify-between items-center">
+      <h1 class="py-4 text-4xl font-bold">User List</h1>
+      <button
+        th:replace="~{fragments/forms/user_new_form :: user_new_form(${createUser})}"
+      ></button>
+    </div>
+    <table
+      th:replace="~{fragments/tables/user_list :: user_list(${users})}"
+    ></table>
+  </main>
+</html>

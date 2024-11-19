@@ -1,0 +1,136 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <div th:fragment="user_new_form(createUser)">
+    <button
+      class="btn btn-outline btn-sm"
+      th:onclick="user_new_form.showModal()"
+    >
+      Register
+    </button>
+    <dialog th:id="user_new_form" class="modal">
+      <div class="modal-box">
+        <form
+          x-data="{ type: 'B2B' }"
+          th:action="@{/users/new}"
+          th:object="${createUser}"
+          method="post"
+          class="flex flex-col"
+        >
+          <h1 class="text-xl font-bold">Register</h1>
+          <!--          USER TYPE-->
+          <label class="form-control w-full">
+            <span class="label">
+              <span class="label-text">User type:</span>
+            </span>
+            <select
+              th:field="*{type}"
+              x-model="type"
+              class="select select-bordered"
+            >
+              <option value="B2B">B2B</option>
+              <option value="B2C">B2C</option>
+            </select>
+          </label>
+
+          <!--          B2B FIELDS-->
+          <div x-show="type === 'B2B'" style="display: none">
+            <label class="form-control w-full">
+              <span class="label">
+                <span class="label-text">Business name:</span>
+              </span>
+              <input
+                x-bind:disabled="type !== 'B2B'"
+                th:field="*{businessName}"
+                type="text"
+                class="input input-bordered w-full"
+                required
+              />
+            </label>
+
+            <label class="form-control w-full">
+              <span class="label">
+                <span class="label-text">CNPJ:</span>
+              </span>
+              <input
+                x-bind:disabled="type !== 'B2B'"
+                th:field="*{cnpj}"
+                type="number"
+                maxlength="14"
+                minlength="14"
+                class="input input-bordered w-full"
+                required
+              />
+            </label>
+          </div>
+
+          <!--          B2C FIELDS-->
+          <div x-show="type === 'B2C'" style="display: none">
+            <label class="form-control w-full">
+              <span class="label">
+                <span class="label-text">Name:</span>
+              </span>
+              <input
+                x-bind:disabled="type !== 'B2C'"
+                th:field="*{name}"
+                type="text"
+                class="input input-bordered w-full"
+                required
+              />
+            </label>
+
+            <label class="form-control w-full">
+              <span class="label">
+                <span class="label-text">CPF:</span>
+              </span>
+              <input
+                x-bind:disabled="type !== 'B2C'"
+                th:field="*{cpf}"
+                type="number"
+                maxlength="11"
+                minlength="11"
+                class="input input-bordered w-full"
+                required
+              />
+            </label>
+          </div>
+
+          <!--          EMAIL-->
+          <label class="form-control w-full">
+            <span class="label">
+              <span class="label-text">Email:</span>
+            </span>
+            <input
+              th:field="*{email}"
+              type="email"
+              class="input input-bordered w-full"
+              required
+            />
+          </label>
+
+          <label class="form-control w-full">
+            <span class="label">
+              <span class="label-text">Phone:</span>
+            </span>
+            <input
+              th:field="*{phone}"
+              type="number"
+              class="input input-bordered w-full"
+              required
+            />
+          </label>
+
+          <button
+            th:onclick="user_new_form.showModal()"
+            type="submit"
+            class="btn btn-primary mt-6"
+          >
+            Register
+          </button>
+        </form>
+      </div>
+      <!--      CLOSE-->
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+  </div>
+</html>

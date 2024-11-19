@@ -1,0 +1,43 @@
+<table
+  xmlns:th="http://www.thymeleaf.org"
+  th:fragment="sale_list(sales)"
+  class="table"
+>
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Total Price</th>
+      <th scope="col">Created At</th>
+      <th scope="col">Updated At</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:if="${#lists.isEmpty(sales)}">
+      <td colspan="4">No sales available.</td>
+    </tr>
+    <tr th:each="sale : ${sales}">
+      <td th:text="${sale.id}"></td>
+      <td
+        th:text="${#numbers.formatDecimal(sale.totalPrice,2,2,'COMMA') + ' R$'}"
+      ></td>
+      <td
+        th:text="${#temporals.format(sale.createdAt, 'dd/MM/yyyy HH:mm')}"
+      ></td>
+      <td
+        th:text="${#temporals.format(sale.updatedAt, 'dd/MM/yyyy HH:mm')}"
+      ></td>
+      <td class="flex flex-row">
+        <span
+          th:replace="~{/fragments/modals/sale_detail_modal :: sale_detail_modal(sale=${sale})}"
+        ></span>
+        <a
+          th:href="@{/sales/delete/{id}(id=${sale.id})}"
+          th:onclick="return confirm('Are you sure?')"
+          class="btn btn-link text-error pl-0"
+          >Delete</a
+        >
+      </td>
+    </tr>
+  </tbody>
+</table>
