@@ -31,8 +31,5 @@ public class SaleItem extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "sale_id")
     private Sale sale;
-
-    public BigDecimal totalPrice() {
-        return product.getPrice().multiply(amount);
-    }
+    
 }

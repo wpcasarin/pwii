@@ -7,7 +7,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLRestriction;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -25,10 +24,5 @@ public class Sale extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    public BigDecimal totalPrice() {
-        return items.stream()
-                .map(SaleItem::totalPrice)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
+    
 }
